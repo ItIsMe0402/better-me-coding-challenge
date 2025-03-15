@@ -44,6 +44,7 @@ ext {
     mockitoVer = '5.14.2'
     mockitoInlineVer = '5.2.0'
     mockitoKotlinVer = '5.4.0'
+    mockkVer = '1.13.17'
     assertJVer = '3.18.0'
     jupiterVer = '5.7.0'
 
@@ -113,6 +114,7 @@ ext {
             jupiterParametrized : "org.junit.jupiter:junit-jupiter-params:$jupiterVer",
             jupiterEngine       : "org.junit.jupiter:junit-jupiter-engine:$jupiterVer",
             mockitoKotlin       : "org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVer",
+            mockk               : "io.mockk:mockk:$mockkVer",
             assertJ             : "org.assertj:assertj-core:$assertJVer",
             mockitoInline       : "org.mockito:mockito-inline:$mockitoInlineVer",
             jupiterMockitoRunner: "org.mockito:mockito-junit-jupiter:$mockitoVer",
