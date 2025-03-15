@@ -1,6 +1,7 @@
 package app.bettermetesttask.movies.sections
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import app.bettermetesttask.domaincore.utils.Result
 import app.bettermetesttask.domainmovies.entries.Movie
 import app.bettermetesttask.domainmovies.interactors.AddMovieToFavoritesUseCase
@@ -28,7 +29,7 @@ class MoviesViewModel @Inject constructor(
         get() = moviesMutableFlow.asStateFlow()
 
     fun loadMovies() {
-        GlobalScope.launch {
+        viewModelScope.launch {
             observeMoviesUseCase()
                 .collect { result ->
                     if (result is Result.Success) {
@@ -40,8 +41,8 @@ class MoviesViewModel @Inject constructor(
     }
 
     fun likeMovie(movie: Movie) {
-        GlobalScope.launch {
-            if (movie.liked) {
+        viewModelScope.launch {
+            if (!movie.liked) {
                 likeMovieUseCase(movie.id)
             } else {
                 dislikeMovieUseCase(movie.id)
