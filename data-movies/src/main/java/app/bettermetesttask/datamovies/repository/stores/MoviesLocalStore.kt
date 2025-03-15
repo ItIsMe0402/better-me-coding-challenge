@@ -10,18 +10,18 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MoviesLocalStore @Inject constructor(
-    private val database: MoviesDatabase
-) {
-
     private val moviesDao: MoviesDao
-        get() = database.getMoviesDao()
-
+) {
     suspend fun getMovies(): List<MovieEntity> {
         return moviesDao.selectMovies()
     }
 
+    suspend fun putMovies(movies: List<MovieEntity>) {
+        moviesDao.setMovies(movies)
+    }
+
     suspend fun getMovie(id: Int): MovieEntity {
-        return moviesDao.selectMovieById(id).first()
+        return moviesDao.selectMovieById(id)
     }
 
     suspend fun likeMovie(id: Int) {

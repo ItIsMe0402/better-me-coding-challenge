@@ -1,6 +1,6 @@
 package app.bettermetesttask.domainmovies.entries
 
-data class Movie (
+data class Movie(
     val id: Int,
     val title: String,
     val description: String,

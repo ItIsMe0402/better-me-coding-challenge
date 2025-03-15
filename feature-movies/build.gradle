@@ -38,6 +38,8 @@ dependencies {
     implementation diDependencies.daggerAndroidSupport
     kapt diDependencies.daggerAndroidProcessor
 
+    implementation serializationDependencies.lib
+
     implementation developmentDependencies.timber
 
     testImplementation testDependencies.mockito
@@ -60,6 +62,7 @@ dependencies {
     implementation composeDependencies.icons
     implementation composeDependencies.adaptive
     implementation composeDependencies.viewModel
+    implementation composeDependencies.navigation
 
     debugImplementation composeDependencies.tooling
 

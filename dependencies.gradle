@@ -15,6 +15,7 @@ ext {
     composeCompilerVer = '1.5.15'
     composeBomVer = '2025.02.00'
     composeViewModelVer = '2.8.7'
+    composeNavigationVer = '2.8.9'
 
     // Coroutines
     coroutinesVer = '1.9.0'
@@ -26,6 +27,9 @@ ext {
     // DI
     javaXInjectVer = '1'
     daggerVer = '2.55'
+
+    // Serialization
+    kotlinxSerializationVer = "1.7.2"
 
     // Images
     glideVer = '4.11.0'
@@ -40,6 +44,7 @@ ext {
     mockitoVer = '5.14.2'
     mockitoInlineVer = '5.2.0'
     mockitoKotlinVer = '5.4.0'
+    mockkVer = '1.13.17'
     assertJVer = '3.18.0'
     jupiterVer = '5.7.0'
 
@@ -92,6 +97,10 @@ ext {
             daggerAndroidProcessor: "com.google.dagger:dagger-android-processor:$daggerVer"
     ]
 
+    serializationDependencies = [
+            lib: "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVer"
+    ]
+
     dataDependencies = [
             room        : "androidx.room:room-ktx:$roomVer",
             roomCompiler: "androidx.room:room-compiler:$roomVer"
@@ -105,6 +114,7 @@ ext {
             jupiterParametrized : "org.junit.jupiter:junit-jupiter-params:$jupiterVer",
             jupiterEngine       : "org.junit.jupiter:junit-jupiter-engine:$jupiterVer",
             mockitoKotlin       : "org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVer",
+            mockk               : "io.mockk:mockk:$mockkVer",
             assertJ             : "org.assertj:assertj-core:$assertJVer",
             mockitoInline       : "org.mockito:mockito-inline:$mockitoInlineVer",
             jupiterMockitoRunner: "org.mockito:mockito-junit-jupiter:$mockitoVer",
@@ -131,6 +141,7 @@ ext {
             icons         : "androidx.compose.material:material-icons-extended",
             adaptive      : "androidx.compose.material3.adaptive:adaptive",
             viewModel     : "androidx.lifecycle:lifecycle-viewmodel-compose:$composeViewModelVer",
+            navigation    : "androidx.navigation:navigation-compose:$composeNavigationVer"
     ]
 
     coilDependencies = [
