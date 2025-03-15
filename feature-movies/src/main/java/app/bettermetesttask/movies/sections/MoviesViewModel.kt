@@ -7,12 +7,10 @@ import app.bettermetesttask.domainmovies.entries.Movie
 import app.bettermetesttask.domainmovies.interactors.AddMovieToFavoritesUseCase
 import app.bettermetesttask.domainmovies.interactors.ObserveMoviesUseCase
 import app.bettermetesttask.domainmovies.interactors.RemoveMovieFromFavoritesUseCase
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,22 +18,33 @@ class MoviesViewModel @Inject constructor(
     private val observeMoviesUseCase: ObserveMoviesUseCase,
     private val likeMovieUseCase: AddMovieToFavoritesUseCase,
     private val dislikeMovieUseCase: RemoveMovieFromFavoritesUseCase,
-    private val adapter: MoviesAdapter
 ) : ViewModel() {
 
-    private val moviesMutableFlow: MutableStateFlow<MoviesState> = MutableStateFlow(MoviesState.Initial)
+    private val moviesMutableFlow: MutableStateFlow<MoviesState> = MutableStateFlow(MoviesState.Loading)
 
     val moviesStateFlow: StateFlow<MoviesState>
         get() = moviesMutableFlow.asStateFlow()
 
+    private var observeMoviesJob: Job? = null
+
+    init {
+        loadMovies()
+    }
+
     fun loadMovies() {
-        viewModelScope.launch {
+        observeMoviesJob?.cancel()
+        moviesMutableFlow.value = MoviesState.Loading
+        observeMoviesJob = viewModelScope.launch {
             observeMoviesUseCase()
                 .collect { result ->
-                    if (result is Result.Success) {
-                        moviesMutableFlow.emit(MoviesState.Loaded(result.data))
-                        adapter.submitList(result.data)
+                    val state = when (result) {
+                        is Result.Success -> {
+                            MoviesState.Loaded(result.data)
+                        }
+
+                        is Result.Error -> MoviesState.Error
                     }
+                    moviesMutableFlow.value = state
                 }
         }
     }
